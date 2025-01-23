@@ -28,11 +28,11 @@ var app = builder.Build();
 app.UseCors("AllowAll");
 
 // הפעלת Swagger בסביבת פיתוח
-if (app.Environment.IsDevelopment())
-{
+//if (app.Environment.IsDevelopment())
+//{
     app.UseSwagger();
     app.UseSwaggerUI();
-}
+//}
 
 // מיפוי ה-Routes של ה-API
 
@@ -73,5 +73,5 @@ app.MapDelete("/items/{id}", async (ToDoDbContext db, int id) =>
     await db.SaveChangesAsync();
     return Results.NoContent();
 });
-
+app.MapGet("/",() => "TasksListServer API is running!");
 app.Run();
