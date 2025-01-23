@@ -3,9 +3,17 @@ using TodoApi;
 
 var builder = WebApplication.CreateBuilder(args);
 
+// שליפת ה-Connection String מתוך משתנה סביבה
+var connectionString = Environment.GetEnvironmentVariable("ConnectionStrings__todo_db");
+
+if (string.IsNullOrEmpty(connectionString))
+{
+    throw new InvalidOperationException("Connection string not found in environment variables.");
+}
+
 // הוספת ה-DbContext לשירותים
 builder.Services.AddDbContext<ToDoDbContext>(options =>
-    options.UseMySql("name=todo_db", Microsoft.EntityFrameworkCore.ServerVersion.Parse("8.0.37-mysql")));
+    options.UseMySql(connectionString, Microsoft.EntityFrameworkCore.ServerVersion.Parse("8.0.37-mysql")));
 
 // הוספת CORS כדי לאפשר קריאות מאפליקציה חיצונית
 builder.Services.AddCors(options =>
