@@ -2,10 +2,10 @@ using Microsoft.EntityFrameworkCore;
 using TodoApi;
 
 var builder = WebApplication.CreateBuilder(args);
-var connectionString = Environment.GetEnvironmentVariable("TODO_DB_CONNECTION_STRING");
+
 // הוספת ה-DbContext לשירותים
 builder.Services.AddDbContext<ToDoDbContext>(options =>
-    options.UseMySql(connectionString, Microsoft.EntityFrameworkCore.ServerVersion.Parse("8.0.37-mysql")));
+    options.UseMySql("name=todo_db", Microsoft.EntityFrameworkCore.ServerVersion.Parse("8.0.37-mysql")));
 
 // הוספת CORS כדי לאפשר קריאות מאפליקציה חיצונית
 builder.Services.AddCors(options =>
