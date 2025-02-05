@@ -5,6 +5,7 @@ var builder = WebApplication.CreateBuilder(args);
 
 // שליפת ה-Connection String מתוך משתנה סביבה
 var connectionString = Environment.GetEnvironmentVariable("ConnectionStrings__todo_db");
+Console.WriteLine($"Connection String: {connectionString}");
 
 if (string.IsNullOrEmpty(connectionString))
 {
@@ -39,7 +40,11 @@ app.UseCors("AllowAll");
 //if (app.Environment.IsDevelopment())
 //{
     app.UseSwagger();
-    app.UseSwaggerUI();
+    app.UseSwaggerUI(c =>
+    {
+        c.SwaggerEndpoint("/swagger/v1/swagger.json", "My API V1");
+        c.RoutePrefix = string.Empty; // זה ייתן לך גישה ל-Swagger בכתובת הבסיס
+    });
 //}
 
 // מיפוי ה-Routes של ה-API
